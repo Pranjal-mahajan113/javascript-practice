@@ -1,8 +1,14 @@
-var globalvar = 100;
-let globallet = 1000;
-const globalconst = 200;
+// console.log(b);
+// let a = 10;
+// var b=20;
 
-function test () {
-    var functionvar = 200;
-    
+
+{
+    var a = 10;
+    let b= 20;
+    const c = 30;
+    console.log(a);
+    console.log(b);
+    console.log(c);
+
 }
