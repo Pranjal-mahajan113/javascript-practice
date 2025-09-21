@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LocalStorage Form</title>
+  </head>
+  <body>
+    <h2>Signup Form</h2>
+
+    <form id="signupForm">
+      <label>
+        Name:
+        <input type="text" id="name" placeholder="Enter your name" />
+      </label>
+      <br /><br />
+      <label>
+        Email:
+        <input type="email" id="email" placeholder="Enter your email" />
+      </label>
+      <br /><br />
+      <button type="submit">Submit</button>
+    </form>
+  </body>
+
+  <script>
+    const nameInput = document.getElementById("name");
+    const emailInput = document.getElementById("email");
+    const form = document.getElementById("signupForm");
+
+    // 🔹 1️⃣ Load saved data when page loads
+    window.addEventListener("DOMContentLoaded", () => {
+      const savedName = localStorage.getItem("name");
+      const savedEmail = localStorage.getItem("email");
+      if (savedName) nameInput.value = savedName;
+      if (savedEmail) emailInput.value = savedEmail;
+    });
+
+    // // 🔹 2️⃣ Save data on each input change
+    // nameInput.addEventListener("input", () => {
+    //   localStorage.setItem("name", nameInput.value);
+    // });
+    // emailInput.addEventListener("input", () => {
+    //   localStorage.setItem("email", emailInput.value);
+    // });
+
+    // 🔹 3️⃣ On form submit, convert to JSON & store
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const userData = {
+        name: nameInput.value,
+        email: emailInput.value,
+      };
+      localStorage.setItem("user", JSON.stringify(userData));
+      alert("✅ Data saved successfully!");
+      // ✅ Clear fields
+      nameInput.value = "";
+      emailInput.value = "";
+      // ✅ Remove individual keys so they don’t come back on reload
+      localStorage.removeItem("name");
+      localStorage.removeItem("email");
+    });
+  </script>
+</html>
