@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Expression Evaluator</title>
+</head>
+<body>
+    <h2>Smart Expression Evaluator</h2>
+
+    <!-- Input field for the user -->
+    <label for="input1">Enter value: </label>
+    <input type="text" id="input1" placeholder="e.g. 2 + 3 * 4" />
+    <button type="button" onclick="evalString()">Test</button>
+
+    <script>
+       
+        // Error thrown for invalid characters
+        class OutOfRangeError extends Error {
+            constructor(char) {
+                super();
+                this.name = "OutOfRangeError";
+                this.message =
+                    "Expression should only consist of integers and +-/* characters and not '" + char + "'";
+            }
+        }
+
+        // Error thrown for invalid operator sequences
+        class InvalidExprError extends Error {
+            constructor() {
+                super();
+                this.name = "InvalidExprError";
+                this.message = "Expression should not have an invalid combination of expression";
+            }
+        }
+
+        // ===============================
+        // Function to evaluate expression
+        
+        function evalString() {
+            let str = document.getElementById("input1").value;
+
+            try {
+                // Check for empty input
+                if (str.trim() === "") throw new SyntaxError("Expression cannot be empty");
+
+                // Check for invalid characters
+               
+                for (let i = 0; i < str.length; i++) {
+                    if (!["0","1","2","3","4","5","6","7","8","9","+","-","*","/"," "].includes(str[i])) {
+                        throw new OutOfRangeError(str[i]);
+                    }
+                }
+
+                // Remove spaces for easier validation
+                str = str.replace(/\s+/g, "");
+
+                // Check if expression starts with invalid operator
+           
+                if (["+", "*", "/"].includes(str[0])) {
+                    throw new SyntaxError("Expression should not start with invalid operator");
+                }
+
+                // Check if expression ends with invalid operator
+              
+                if (["+", "-", "*", "/"].includes(str[str.length - 1])) {
+                    throw new SyntaxError("Expression should not end with invalid operator");
+                }
+
+             
+                // Check for invalid operator combinations
+              
+                for (let i = 1; i < str.length - 1; i++) {
+                    if (["+", "-", "*", "/"].includes(str[i - 1]) && ["+", "*", "/"].includes(str[i])) {
+                        throw new InvalidExprError();
+                    }
+                    if (["+", "-", "*", "/"].includes(str[i - 1]) &&
+                        str[i] === "-" &&
+                        ["+", "-", "*", "/"].includes(str[i + 1])) {
+                        throw new InvalidExprError();
+                    }
+                }
+
+                // If all checks pass
+                alert("Expression is valid!");
+                
+
+            } catch (e) {
+                // Show error name and message
+                alert("Error: " + e.name + " - " + e.message);
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body></body>
+  <script>
+    // let num = Number(prompt("Enter a number"));
+    // console.log("User num",num);
+    // for (let i=0; i <= num; i++) {
+    //     console.log("Numbers",i);
+    //   if (i % 2 === 0) {
+    //     console.log("Even number",i);
+    //   }else{
+    //     console.log("Odd Number",i);
+    //   }
+
+    // }
+    let num = Number(prompt("Enter a number :"));
+    let evennums = [];
+    let oddnums = [];
+    let sum = 0;
+    for (let i = 1; i <= num; i++) {
+      sum += i;
+
+      if (i % 2 === 0) {
+        evennums.push(i);
+      } else {
+        oddnums.push(i);
+      }
+    }
+    console.log("Numbers from 1 to", num);
+    console.log("Even numbers :", evennums.join(","));
+    console.log("odd numbers :", oddnums.join(","));
+    console.log("sum of all numbers",sum);
+  </script>
+</html>
