@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>click addEventListene</title>
+</head>
+<body>
+    <h1 id="head">Hello!</h1>
+    <button id="btn">clcik me</button>
+    <script>
+        let heading=  document.getElementById("head");
+        document.getElementById("btn").addEventListener("click" ,() =>{
+            heading.innerHTML = "Pranjal";
+            heading.style.cssText ="color:red";
+        })
+       
+
+
+    </script>
+    
+</body>
+</html>
+<!-- 
+        let heading = document.getElementById("head");
+        let isHello = true; // initial state
+
+        document.getElementById("btn").addEventListener("click", () => {
+            if (isHello) {
+                heading.innerHTML = "Pranjal";
+            } else {
+                heading.innerHTML = "Hello!";
+            }
+            isHello = !isHello; // toggle state
+        }); -->

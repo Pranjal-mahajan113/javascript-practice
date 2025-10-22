@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Word Analyzer</title>
+</head>
+<body></body>
+<script>
+  let word = prompt("Write a word:").toLowerCase();
+  console.log(`Word: ${word}`);
+
+  let vowels = 0;
+  let consonants = 0;
+
+  for (let i = 0; i < word.length; i++) {
+    let ch = word[i];
+    if ("aeiou".includes(ch)) {
+      vowels++;
+    } else if (ch >= 'a' && ch <= 'z') {
+      consonants++;
+    }
+  }
+
+  console.log(`Vowels: ${vowels}`);
+  console.log(`Consonants: ${consonants}`);
+
+  if (vowels > consonants) {
+    console.log("More vowels than consonants!");
+  } else if (consonants > vowels) {
+    console.log("More consonants than vowels!");
+  } else {
+    console.log("Equal vowels and consonants!");
+  }
+</script>
+</html>

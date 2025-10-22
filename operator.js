@@ -81,7 +81,7 @@ console.log("Pre-Decrement:", --count); // 0
 // Ternary Operator
 let age = 20;
 let result = (age >= 18) ? "Adult" : "Minor";
-console.log("Ternary Result:", result);  // Adult
+console.log("Ternary Result:", result);  // Adult``
 
 
 
