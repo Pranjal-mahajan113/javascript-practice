@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title> Snake Game</title>
+  <style>
+    #gameContainer {
+      width: 400px;
+      height: 400px;
+      display: grid;
+      grid-template-columns: repeat(20, 20px);
+      grid-template-rows: repeat(20, 20px);
+      gap: 1px;
+      background-color: #09e151;
+      margin-bottom: 10px;
+    }
+
+    .pixel {
+      width: 20px;
+      height: 20px;
+      background-color: #d3d300;
+    }
+
+    .snake {
+      background-color: rgb(60, 0, 128);
+    }
+
+    .food {
+      background-color: red;
+    }
+
+    .scoreBoard {
+      font-size: 20px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="scoreBoard">Score: <span id="score">0</span></div>
+  <div id="gameContainer"></div>
+
+  <script>
+    const gameContainer = document.getElementById("gameContainer");
+    const scoreSpan = document.getElementById("score");
+    const gridSize = 20; // 20x20 grid
+    const totalCells = gridSize * gridSize;
+
+    // =====================
+    // Step 1: Create grid
+    // =====================
+    const cells = [];
+    for (let i = 0; i < totalCells; i++) {
+      const cell = document.createElement('div');
+      cell.classList.add('pixel');
+      gameContainer.appendChild(cell);
+      cells.push(cell);
+    }
+
+    // =====================
+    // Step 2: Initialize Snake
+    // =====================
+    let snake = [2, 1, 0]; // Head is first element
+    snake.forEach(i => cells[i].classList.add('snake'));
+    let direction = 1; // Start moving right
+    let score = 0;
+
+    // =====================
+    // Step 3: Place Food
+    // =====================
+    let foodIndex;
+    function placeFood() {
+      do {
+        foodIndex = Math.floor(Math.random() * totalCells);
+      } while (snake.includes(foodIndex));
+      cells[foodIndex].classList.add('food');
+    }
+    placeFood();
+
+    // =====================
+    // Step 4: Move Snake
+    // =====================
+    function move() {
+      const tail = snake.pop(); // Remove last
+      cells[tail].classList.remove('snake');
+
+      let head = snake[0] + direction;
+
+      // Collision with walls
+      if (
+        head < 0 ||
+        head >= totalCells ||
+        (direction === 1 && head % gridSize === 0) ||
+        (direction === -1 && (snake[0] % gridSize === 0))
+      ) {
+        alert(`Game Over! Score: ${score}`);
+        clearInterval(timerId);
+        return;
+      }
+
+      // Collision with self
+      if (snake.includes(head)) {
+        alert(`Game Over! Score: ${score}`);
+        clearInterval(timerId);
+        return;
+      }
+
+      snake.unshift(head);
+      cells[head].classList.add('snake');
+
+      // Eat food
+      if (head === foodIndex) {
+        cells[foodIndex].classList.remove('food');
+        snake.push(tail); // Grow snake
+        score++;
+        scoreSpan.textContent = score;
+        placeFood();
+      }
+    }
+
+    // =====================
+    // Step 5: Controls
+    // =====================
+    document.addEventListener('keydown', (e) => {
+      if (e.key === "ArrowRight" && direction !== -1) direction = 1;
+      if (e.key === "ArrowLeft" && direction !== 1) direction = -1;
+      if (e.key === "ArrowUp" && direction !== gridSize) direction = -gridSize;
+      if (e.key === "ArrowDown" && direction !== -gridSize) direction = gridSize;
+    });
+
+    // =====================
+    // Step 6: Start Game
+    // =====================
+    const timerId = setInterval(move, 200); // Move every 200ms
+  </script>
+
+</body>
+</html>

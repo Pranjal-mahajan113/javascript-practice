@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dynamic Shopping List</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 30px;
+      }
+
+      input,
+      button {
+        padding: 8px 12px;
+        margin-right: 10px;
+        font-size: 16px;
+      }
+
+      button {
+        cursor: pointer;
+      }
+
+      table {
+        width: 50%;
+        border-collapse: collapse;
+        margin-top: 20px;
+      }
+
+      th,
+      td {
+        border: 1px solid #ccc;
+        padding: 10px;
+        text-align: left;
+      }
+
+      th {
+        background-color: #f2f2f2;
+      }
+
+      tfoot td {
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>Dynamic Shopping List</h2>
+
+    <!-- Input Fields -->
+    <input type="text" id="item-name-input" placeholder="Item Name" />
+    <input type="text" id="item-price-input" placeholder="Price" />
+    <button id="add-button">Add</button>
+
+    <!-- Table -->
+    <table>
+      <thead>
+        <tr>
+          <th data-ns-test="item-name">Item Name</th>
+          <th data-ns-test="item-price">Price</th>
+        </tr>
+      </thead>
+      <tbody id="table-body">
+        <!-- Items will appear here -->
+
+        <!-- <tr>
+          <td>Apple</td>
+          <td>50</td>
+        </tr>
+        <tr>
+          <td>Banana</td>
+          <td>30</td>
+        </tr> -->
+      </tbody>
+      <tfoot>
+        <tr>
+          <td>Grand Total</td>
+          <td data-ns-test="grandTotal">0</td>
+        </tr>
+      </tfoot>
+    </table>
+
+    <script>
+      const addButton = document.getElementById("add-button");
+      const nameInput = document.getElementById("item-name-input");
+      const priceInput = document.getElementById("item-price-input");
+      const tableBody = document.getElementById("table-body");
+      const grandTotalElement = document.querySelector(
+        '[data-ns-test="grandTotal"]'
+      );
+
+      let grandTotal = 0;
+
+      addButton.addEventListener("click", () => {
+        const name = nameInput.value.trim();
+        const price = parseFloat(priceInput.value);
+
+        // Validation
+        if (!name) {
+          alert("Item name cannot be empty!");
+          return;
+        }
+        if (isNaN(price) || price < 0) {
+          alert("Price must be a valid number!");
+          return;
+        }
+
+        // Create table row
+        const row = document.createElement("tr");
+        row.innerHTML = `
+        <td data-ns-test="item-name">${name}</td>
+        <td data-ns-test="item-price">${price.toFixed(2)}</td>
+      `;
+        tableBody.appendChild(row);
+
+        // Update grand total
+        grandTotal += price;
+        grandTotalElement.textContent = grandTotal.toFixed(2);
+
+        // Clear inputs
+        nameInput.value = "";
+        priceInput.value = "";
+      });
+    </script>
+  </body>
+</html>
